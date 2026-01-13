@@ -3,35 +3,45 @@ layout: ../layouts/AboutLayout.astro
 title: "About"
 ---
 
-AstroPaper is a minimal, accessible and SEO-friendly blog theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/).
+## About
 
-![Astro Paper](public/astropaper-og.jpg)
+I use this site to document how I **think, learn, and make decisions**.
 
-AstroPaper provides a solid foundation for blogs, or even portfolios\_ with full markdown support, built-in dark mode, and a clean layout that works out-of-the-box.
+I write to clarify my own reasoning, track how my views evolve over time, and leave behind evidence of how I approach uncertainty, trade-offs, and long-term learning. ✍️
 
-The blog posts in this theme also serve as guides, docs or example articles\_ making AstroPaper a flexible starting point for your next content-driven site.
+---
 
-## Features
+## How to Read This Site
 
-AstroPaper comes with a set of useful features that make content publishing easy and effective:
+If you want a quick sense of how I think, you can start with:
 
-- SEO-friendly
-- Fast performance
-- Light & dark mode
-- Highly customizable
-- Organizable blog posts
-- Responsive & accessible
-- Static search with [PageFind](https://pagefind.app/)
-- Automatic social image generation
+- **Building Things in the Real World**  
+  [What I Learned from Building a Small Business](
+  /posts/reflections-on-my-entrepreneurial-journey-or-side-hustle/
+  ) — products, pricing, sales, SOPs, and why some models don’t scale.
 
-and so much more.
+- **Inner Standards & Values**  
+  [Inner Scorecard](/posts/inner-scorecard/) — how I evaluate myself independent of external validation.
 
-## Show your support
+- **Learning from Mistakes**  
+  [What I Learned from Investing](/posts/the-things-i-learned-from-investing/) — early misjudgments, risk awareness, and how my strategy simplified over time.
 
-If you like [AstroPaper](https://github.com/satnaing/astro-paper), consider giving it a star ⭐️.
+---
 
-Found a bug 🐛 or have an improvement ✨ in mind? Feel free to open an [issue](https://github.com/satnaing/astro-paper/issues), submit a [pull request](https://github.com/satnaing/astro-paper/pulls) or start a [discussion](https://github.com/satnaing/astro-paper/discussions).
+## What You’ll Find Here
 
-If you find this theme helpful, you can also [sponsor me on GitHub](https://github.com/sponsors/satnaing) or [buy me a coffee](https://buymeacoffee.com/satnaing) to show your support — every penny counts.
+Most of the writing on this site falls into three broad categories:
 
-Kyay zuu! 🙏🏼
+### Business & Systems  
+Notes on how products, pricing, funnels, SOPs, incentives, and collaboration actually work in practice, not just in theory.
+
+### Thinking & Decision-Making  
+Mental models, opportunity cost, trade-offs, and how I evaluate choices under constraints.
+
+### Learning by Doing  
+Reflections from investing, building small projects, and experimenting with side hustles — including mistakes, misjudgments, and corrections.
+
+---
+ 
+If something here resonates, I’m always open to a conversation —  
+[feel free to reach out by email](https://mail.google.com/mail/?view=cm&fs=1&to=yachen.li@mail.mcgill.ca).

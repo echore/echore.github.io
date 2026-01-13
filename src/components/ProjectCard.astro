@@ -1,0 +1,151 @@
+---
+interface Props {
+  post: any;
+}
+
+const { post } = Astro.props as Props;
+const data = post?.data ?? {};
+
+// title / description
+const title: string = data.title ?? "";
+const description: string = data.description ?? "";
+
+// image: support multiple common fields
+const image: string =
+  data.image ??
+  data.coverImage ??
+  data.ogImage ??
+  data.heroImage ??
+  "";
+
+// build slug fallback from id
+const slugFromId =
+  typeof post?.id === "string"
+    ? post.id.replace(/\.md$/i, "")
+    : "";
+
+// final url (robust + TS-safe)
+let url = "#";
+
+if (typeof post?.url === "string" && post.url.length > 0) {
+  url = post.url;
+} else if (typeof post?.slug === "string" && post.slug.length > 0) {
+  url = `/posts/${post.slug}/`;
+} else if (slugFromId.length > 0) {
+  url = `/posts/${slugFromId}/`;
+}
+
+// tags
+const tags: string[] = Array.isArray(data.tags) ? data.tags : [];
+---
+
+<article class="card">
+  <a href={url} class="image" aria-label={`Read ${title}`}>
+    {image ? (
+      <img src={image} alt={title} loading="lazy" />
+    ) : (
+      <div class="placeholder" aria-hidden="true"></div>
+    )}
+  </a>
+
+  <div class="body">
+    <h3 class="title">
+      <a href={url}>{title}</a>
+    </h3>
+
+    {description && <p class="desc">{description}</p>}
+
+    {tags.length > 0 && (
+      <div class="tags">
+        {tags.map(tag => (
+          <span class="tag">{tag}</span>
+        ))}
+      </div>
+    )}
+
+    <a href={url} class="button">
+      View post →
+    </a>
+  </div>
+</article>
+
+<style>
+  .card {
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: white;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .image {
+    display: block;
+  }
+
+  .image img,
+  .placeholder {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  .body {
+    padding: 20px 20px 24px;
+  }
+
+  .title {
+    margin: 0 0 10px;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .title a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .title a:hover {
+    text-decoration: underline;
+  }
+
+  .desc {
+    opacity: 0.85;
+    line-height: 1.55;
+    margin: 0 0 14px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .tag {
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  .button {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--accent, #2563eb);
+  }
+
+  .button:hover {
+    text-decoration: underline;
+  }
+</style>

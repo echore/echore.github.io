@@ -6,6 +6,7 @@ import Footer from "@/components/Footer.astro";
 import Socials from "@/components/Socials.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import Card from "@/components/Card.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import IconRss from "@/assets/icons/IconRss.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
@@ -15,17 +16,23 @@ import { SOCIALS } from "@/constants";
 const posts = await getCollection("blog");
 
 const sortedPosts = getSortedPosts(posts);
-const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
+const featuredPosts = sortedPosts
+  .filter(({ data }) => data.featured)
+  .sort((a, b) => (a.data.featuredOrder ?? 999) - (b.data.featuredOrder ?? 999));
+
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 ---
 
 <Layout>
   <Header />
+
   <main id="main-content" data-layout="index" class="app-layout">
+    <!-- HERO -->
     <section id="hero" class:list={["pt-8 pb-6", "border-b border-border"]}>
       <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Mingalaba
+        Yachen’s Notes
       </h1>
+
       <a
         target="_blank"
         href="/rss.xml"
@@ -42,22 +49,22 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       </a>
 
       <p>
-        AstroPaper is a minimal, responsive, accessible and SEO-friendly Astro
-        blog theme. This theme follows best practices and provides accessibility
-        out of the box. Light and dark mode are supported by default. Moreover,
-        additional color schemes can also be configured.
+        Notes on thinking, investing, business, and learning.
+        <br /><br />
+        Business world was never part of my original plan.
+        But when it appeared in my life, I chose to create opportunity for learning.
+        <br /><br />
+        Can I really do this? I don’t know. But if I never try, the probability is always zero.
+        <br /><br />
+        So screw the odds. I know I won’t regret trying.
+        <br /><br />
+        C’est parti! 😎
       </p>
-      <p class="mt-2">
-        Read the blog posts or check
-        <LinkButton
-          class="underline decoration-dashed underline-offset-4 hover:text-accent"
-          href="https://github.com/satnaing/astro-paper#readme"
-        >
-          README
-        </LinkButton> for more info.
-      </p>
+      
+
+      
+
       {
-        // only display if at least one social link is enabled
         SOCIALS.length > 0 && (
           <div class="mt-4 flex max-sm:flex-col sm:items-center">
             <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">Social Links:</div>
@@ -67,6 +74,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       }
     </section>
 
+    <!-- FEATURED PROJECTS (BIG CARDS) -->
     {
       featuredPosts.length > 0 && (
         <section
@@ -76,16 +84,23 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
             { "border-b border-border": recentPosts.length > 0 },
           ]}
         >
-          <h2 class="text-2xl font-semibold tracking-wide">Featured</h2>
-          <ul>
-            {featuredPosts.map(data => (
-              <Card variant="h3" {...data} />
+          <h2 class="text-3xl font-semibold tracking-wide">
+            Featured Projects
+          </h2>
+          <p class="mt-2 max-w-2xl opacity-80">
+            A few selected projects and posts worth reading.
+          </p>
+
+          <section class="projects-grid mt-8">
+            {featuredPosts.map((post) => (
+              <ProjectCard post={post} />
             ))}
-          </ul>
+          </section>
         </section>
       )
     }
 
+    <!-- RECENT POSTS (KEEP ORIGINAL STYLE) -->
     {
       recentPosts.length > 0 && (
         <section id="recent-posts" class="pt-12 pb-6">
@@ -107,15 +122,32 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       </LinkButton>
     </div>
   </main>
+
   <Footer />
 </Layout>
 
 <script>
   document.addEventListener("astro:page-load", () => {
-    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
-      ?.dataset?.layout;
+    const el = document.querySelector("#main-content") as HTMLElement | null;
+    const indexLayout = el?.dataset?.layout;
+
     if (indexLayout) {
       sessionStorage.setItem("backUrl", "/");
     }
   });
 </script>
+
+
+<style>
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  @media (max-width: 768px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
